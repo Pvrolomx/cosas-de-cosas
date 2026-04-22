@@ -69,7 +69,7 @@ function NewTicketForm() {
         <div className="form-group">
           <label className="form-label">¿Qué es?</label>
           <input
-            className="form-input form-title"
+            className="form-input title-input"
             placeholder="Ejemplo: Llevar a Villa Magna"
             value={titulo}
             onChange={(e) => setTitulo(e.target.value)}
