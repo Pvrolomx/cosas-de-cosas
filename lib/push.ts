@@ -59,7 +59,7 @@ export async function enablePush(user: User): Promise<{ ok: boolean; error?: str
     }
     const sub = await reg.pushManager.subscribe({
       userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC),
+      applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC) as any,
     });
 
     // Guardar en backend
