@@ -1,7 +1,7 @@
-// Cosas de Cosas v3 — Service Worker
+// Cosas de Cosas v3.1 — Service Worker con Web Push
 // Network-first per RDE Cloud v1 Apéndice PWA
 
-const CACHE_NAME = 'cosas-v3';
+const CACHE_NAME = 'cosas-v31';
 const STATIC = ['/manifest.json', '/icon-192.png', '/icon-512.png'];
 
 self.addEventListener('install', (event) => {
@@ -51,4 +51,58 @@ self.addEventListener('fetch', (event) => {
       )
     );
   }
+});
+
+// ============= WEB PUSH =============
+
+self.addEventListener('push', (event) => {
+  let data = {};
+  try {
+    data = event.data ? event.data.json() : {};
+  } catch (e) {
+    data = { title: 'Cosas de Cosas', body: event.data ? event.data.text() : 'Nuevo aviso' };
+  }
+
+  const title = data.title || 'Cosas de Cosas';
+  const options = {
+    body: data.body || '',
+    icon: '/icon-192.png',
+    badge: '/icon-192.png',
+    tag: data.tag || 'cosas-notif',
+    data: { url: data.url || '/', ...data },
+    requireInteraction: data.urgencia === 'urgente',
+    vibrate: data.urgencia === 'urgente' ? [200, 100, 200, 100, 200] : [150],
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const targetUrl = (event.notification.data && event.notification.data.url) || '/';
+
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((windowClients) => {
+      // Si ya hay una ventana abierta, navegarla
+      for (const client of windowClients) {
+        if ('focus' in client) {
+          client.focus();
+          if ('navigate' in client) {
+            client.navigate(targetUrl);
+          }
+          return;
+        }
+      }
+      // Si no, abrir una nueva
+      if (self.clients.openWindow) {
+        return self.clients.openWindow(targetUrl);
+      }
+    })
+  );
+});
+
+// Pushsubscriptionchange: re-suscribir si expira
+self.addEventListener('pushsubscriptionchange', (event) => {
+  // No re-subscription automática; la app al abrir verificará estado
+  console.log('[SW] pushsubscriptionchange event');
 });
