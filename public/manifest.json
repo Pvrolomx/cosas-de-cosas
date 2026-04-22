@@ -1,11 +1,11 @@
 {
   "name": "Cosas de Cosas",
   "short_name": "Cosas",
-  "description": "Recados de Claudia — personal, trabajo, repairs",
+  "description": "Los pendientes de nosotros",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0b1220",
-  "theme_color": "#0b1220",
+  "background_color": "#f5f0e8",
+  "theme_color": "#f5f0e8",
   "orientation": "portrait",
   "icons": [
     { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },

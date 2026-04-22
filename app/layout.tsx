@@ -3,11 +3,11 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Cosas de Cosas',
-  description: 'Recados de Claudia — personal, trabajo, repairs',
+  description: 'Los pendientes de nosotros',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
-    statusBarStyle: 'black-translucent',
+    statusBarStyle: 'default',
     title: 'Cosas',
   },
   icons: {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#0b1220',
+  themeColor: '#f5f0e8',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,

@@ -1,8 +1,7 @@
-// Cosas de Cosas — Service Worker
-// Network-first para HTML/API, cache-first para assets estáticos
-// Ver RDE Cloud v1 — Apéndice PWA (20-Mar-2026)
+// Cosas de Cosas v3 — Service Worker
+// Network-first per RDE Cloud v1 Apéndice PWA
 
-const CACHE_NAME = 'cosas-v1';
+const CACHE_NAME = 'cosas-v3';
 const STATIC = ['/manifest.json', '/icon-192.png', '/icon-512.png'];
 
 self.addEventListener('install', (event) => {
@@ -23,15 +22,14 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Ignorar Supabase / websockets / requests no-GET
   if (request.method !== 'GET') return;
   if (url.hostname.includes('supabase.co')) return;
+  if (url.hostname.includes('fonts.googleapis.com') || url.hostname.includes('fonts.gstatic.com')) return;
 
   const isDoc = request.mode === 'navigate' || request.destination === 'document';
   const isApi = url.pathname.startsWith('/api/');
 
   if (isDoc || isApi) {
-    // Network-first
     event.respondWith(
       fetch(request)
         .then((resp) => {
@@ -42,7 +40,6 @@ self.addEventListener('fetch', (event) => {
         .catch(() => caches.match(request).then((r) => r || caches.match('/')))
     );
   } else {
-    // Cache-first para assets
     event.respondWith(
       caches.match(request).then((cached) =>
         cached ||
