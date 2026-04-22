@@ -2,7 +2,7 @@
 import { useEffect, useState, Suspense } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { supabase, Ticket, TicketUpdate, User, Estado, Urgencia, labelUser, labelCategoria, labelEstado, labelUrgencia } from '@/lib/supabase';
+import { supabase, Ticket, TicketUpdate, User, Estado, labelUser, labelCategoria, labelEstado } from '@/lib/supabase';
 
 function TicketDetail() {
   const params = useParams();
