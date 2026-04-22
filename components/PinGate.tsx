@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { User, labelUser } from '@/lib/supabase';
 import Dashboard from './Dashboard';
 
@@ -46,6 +47,7 @@ export default function PinGate({ me }: { me: User }) {
         />
         <div className="err">{err}</div>
         <button className="enter-btn" onClick={tryPin}>Entrar</button>
+        <Link href="/" className="pin-back">← no soy {labelUser(me).toLowerCase()}</Link>
       </div>
     </div>
   );
