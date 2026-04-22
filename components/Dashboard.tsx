@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { supabase, Ticket, User, Categoria, Estado, Urgencia, labelUser, labelCategoria, labelEstado } from '@/lib/supabase';
+import PushBell from './PushBell';
 
 type Filter = 'todos' | 'mios' | 'para_mi' | 'urgentes' | 'resueltos';
 
@@ -105,7 +106,10 @@ export default function Dashboard({ me }: { me: User }) {
       <div className="shell">
         <div className="topbar">
           <div className="brand">Cosas <em>de</em> cosas</div>
-          <button className="whoami" onClick={logout}>{labelUser(me)} · salir</button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <PushBell me={me} />
+            <button className="whoami" onClick={logout}>{labelUser(me)} · salir</button>
+          </div>
         </div>
 
         {/* HERO */}
