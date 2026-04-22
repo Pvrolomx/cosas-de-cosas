@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { supabase, Ticket, User, Categoria, Estado, Urgencia, labelUser, labelCategoria, labelEstado, iconCategoria } from '@/lib/supabase';
+import { supabase, Ticket, User, Categoria, Estado, Urgencia, labelUser, labelCategoria, labelEstado } from '@/lib/supabase';
 
 type Filter = 'todos' | 'mios' | 'para_mi' | 'urgentes' | 'resueltos';
 
@@ -204,7 +204,7 @@ function TicketCard({ ticket, me }: { ticket: Ticket; me: User }) {
       <div className="t-head">
         <span className={`t-tag ${ticket.categoria}`}>{labelCategoria[ticket.categoria]}</span>
         {ticket.urgencia === 'urgente' && <span className="t-urgente">Urgente</span>}
-        {ticket.urgencia === 'alta' && ticket.urgencia !== 'urgente' && (
+        {ticket.urgencia === 'alta' && (
           <span style={{ fontSize: 11, color: 'var(--trabajo-deep)', fontWeight: 600, letterSpacing: '0.05em' }}>ALTA</span>
         )}
       </div>
